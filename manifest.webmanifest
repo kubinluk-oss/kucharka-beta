@@ -1,8 +1,9 @@
 {
-  "name": "Kuchařka",
-  "short_name": "Kuchařka",
+  "name": "Kuchařka beta",
+  "short_name": "Kuchařka β",
   "description": "Sdílená sbírka receptů",
   "lang": "cs",
+  "id": "./?beta",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

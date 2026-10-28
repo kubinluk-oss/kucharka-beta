@@ -1,6 +1,6 @@
 // Service worker: cachuje jen soubory aplikace (shell). Data žijí ve Firebase,
 // takže požadavky mimo tento web necháváme být — aplikace potřebuje připojení.
-const CACHE = 'kucharka-v128';
+const CACHE = 'kucharka-beta-v1';   // BETA (repo kucharka-beta) — ostrá appka má kucharka-vNNN
 /* Fotky receptů a profilovek. Záměrně VLASTNÍ cache s vlastní verzí: přežije
    aktualizace appky, takže se po každé změně kódu nestahují znovu. Firebase u nich
    posílá `cache-control: private, max-age=0`, takže by je prohlížeč sám nikdy
