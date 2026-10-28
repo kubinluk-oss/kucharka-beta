@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jádro — test</title>
+<style>body{font:14px/1.5 system-ui;margin:16px;max-width:640px}pre{background:#f4f4f4;padding:8px;white-space:pre-wrap}</style>
+</head>
+<body>
+<!-- Vývojářská stránka: ověření jádra (js/core) bez rozhraní. Do appky nepatří. -->
+<h1>Jádro Kuchařky — test</h1>
+<p id="auth">…</p>
+<button id="demo">Spustit ukázková data</button>
+<pre id="out"></pre>
+<script type="module">
+import * as core from './js/core/data.js';
+import { watchAuth } from './js/core/auth.js';
+
+const out = document.getElementById('out');
+const log = (...a) => { out.textContent += a.map(x => typeof x === 'string' ? x : JSON.stringify(x)).join(' ') + '\n'; };
+window.core = core;   // pro zkoušení z konzole
+
+watchAuth((status, user) => {
+  document.getElementById('auth').textContent = 'Přihlášení: ' + status + (user ? ' (' + user.email + ')' : '');
+  if (status === 'ready') core.startLive(user);
+});
+core.on('status', () => log('status:', { mode: core.state.mode, loaded: core.state.loaded, error: core.state.loadError }));
+core.on('groups', () => log('skupiny:', core.state.groups.map(g => core.groupLabel(g.id))));
+core.on('data', () => log('recepty:', core.state.recipes.length, 'kategorie:', core.state.categories.length));
+core.on('shopping', () => log('nákup:', core.state.shopping.map(i => i.text + ' [' + i.cat + ']')));
+core.on('notice', n => log('upozornění:', n));
+
+document.getElementById('demo').addEventListener('click', async () => {
+  core.startDemo();
+  await new Promise(r => setTimeout(r, 50));
+  log('— hledání „mléko, vejce":', core.searchRecipes('mléko, vejce', 'ingredients').map(r => r.name + ' ' + r._match.matched + '/' + r._match.total));
+  log('— výpis Polévky:', core.listRecipes('Polévky').map(r => r.name));
+  log('— moje recepty (smím upravit):', core.state.recipes.filter(core.canEditRecipe).map(r => r.name));
+  await core.addRecipeToShopping('demo3', 2);
+  const id = await core.saveRecipe(null, { name: 'Testovací recept', categories: ['Dezerty'], cookTime: 10, portions: 2, ingredients: [{ qty: '1', unit: 'kg', name: 'brambory' }], steps: ['Uvař.'], photo: '' });
+  log('— uložen recept:', core.getRecipe(id).name, 'autor', core.getRecipe(id).author);
+  await core.addReview(id, { stars: 5, comment: 'Paráda' });
+  log('— hodnocení:', core.getRecipe(id).reviews.length);
+  await core.deleteRecipe(id);
+  log('— po smazání existuje?', !!core.getRecipe(id));
+});
+</script>
+</body>
+</html>
