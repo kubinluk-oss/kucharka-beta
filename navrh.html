@@ -64,7 +64,6 @@
   <section class="screen" data-screen="domu">
     <header class="screen-head">
       <div>
-        <p class="t-sub">Dobrý den, Lukáši</p>
         <h1 class="t-large">Uvař něco dobrého</h1>
       </div>
       <a class="avatar press" href="#domu" aria-label="Profil a nastavení">L</a>
@@ -142,7 +141,7 @@
     </div>
 
     <div class="chips" id="chips" role="group" aria-label="Kategorie"></div>
-    <div class="sort-row"><span class="t-foot" id="sort-label">Nejnovější nahoře</span></div>
+    <div class="sort-row" id="sort-row"><span class="t-foot" id="sort-label">Nejnovější nahoře</span></div>
 
     <div id="r-list"></div>
     <div class="empty" id="empty" hidden>
@@ -179,9 +178,11 @@
           <div class="grow"><p class="t-head">Nakoupit suroviny</p><p class="t-sub">5 položek do nákupního seznamu</p></div>
           <button class="pill pill-accent pill-sm press">Do nákupu</button>
         </div>
-        <div class="cook-bar">
-          <button class="pill glass press"><svg class="ic"><use href="#i-flame"/></svg>Vařím</button>
-        </div>
+        <label class="card buy cook">
+          <span class="cook-ic"><svg class="ic"><use href="#i-flame"/></svg></span>
+          <span class="grow"><span class="t-head" style="display:block">Vařím</span><span class="t-sub">Displej nezhasne, dokud vaříš</span></span>
+          <input type="checkbox" class="switch" id="cook" aria-label="Vařím – displej nezhasne">
+        </label>
       </div>
 
       <div>
@@ -275,7 +276,7 @@
   <section class="screen editor" data-screen="novy">
     <div class="ed-bar glass">
       <button class="ed-cancel press" id="ed-cancel">Zrušit</button>
-      <div class="ed-title"><span class="t-head">Nový recept</span><span class="t-foot" id="ed-draft">Rozepsaný recept se ukládá sám</span></div>
+      <div class="ed-title"><span class="t-head">Nový recept</span></div>
       <button class="pill pill-accent pill-sm press" id="ed-save">Uložit</button>
     </div>
 
@@ -476,24 +477,22 @@ const cardHtml = r => `
     </a>`;
 const sorter = () => lv.sort === 'best' ? (a, b) => b.stars - a.stars : lv.sort === 'az' ? (a, b) => a.name.localeCompare(b.name, 'cs') : (a, b) => a.age - b.age;
 
-// bez hledání a bez vybrané kategorie: kategorie pod sebou, v každé její recepty
-function renderGrouped() {
-  $('#list-count').textContent = `${RECIPES.length} receptů v ${CATS.length} kategoriích`;
-  $('#sort-label').textContent = SORTS[lv.sort] + ' v každé kategorii';
+// bez hledání a bez vybrané kategorie: jen kategorie, recepty až po rozkliknutí
+const CAT_BG = [3, 5, 6, 4, 8, 1, 0, 2];
+function renderCategories() {
+  $('#list-count').textContent = `${CATS.length} kategorií`;
   $('#empty').hidden = true;
-  $('#r-list').innerHTML = CATS.map(([c, e]) => {
-    const list = RECIPES.filter(r => r.cat === c || r.also === c).sort(sorter());
-    return `<section class="r-group">
-      <div class="section-head"><h2 class="t-title r-group-title"><span class="cat-dot">${e}</span>${c}</h2>${list.length ? `<button class="link" data-open-cat="${c}">Vše (${list.length})</button>` : ''}</div>
-      ${list.length ? `<div class="r-list">${list.slice(0, 3).map(cardHtml).join('')}</div>`
-        : `<a class="card r-empty press" href="#novy"><span class="t-sub">Zatím tu není žádný recept</span><span class="link">Přidat</span></a>`}
-    </section>`;
-  }).join('');
+  $('#r-list').innerHTML = `<div class="tiles">${CATS.map(([c, e], i) => {
+    const n = RECIPES.filter(r => r.cat === c || r.also === c).length;
+    return `<button class="tile press" data-open-cat="${c}" style="background:var(--cat-${CAT_BG[i]})"><span class="emoji">${e}</span><span class="count">${n}</span><span class="name">${c}</span></button>`;
+  }).join('')}</div>`;
 }
 function renderList(animate) {
   const words = norm(lv.q).split(/\s+/).filter(Boolean);
-  $('#r-list').classList.toggle('r-list', !!(lv.cat || words.length));
-  if (!lv.cat && !words.length) { renderGrouped(); if (animate) stagger('#r-list .r-group'); return; }
+  const browsing = !lv.cat && !words.length;
+  $('#r-list').classList.toggle('r-list', !browsing);
+  $('#chips').hidden = $('#sort-row').hidden = $('#sort-btn').hidden = browsing;
+  if (browsing) { renderCategories(); if (animate) stagger('#r-list .tile'); return; }
   let list = RECIPES.filter(r => (!lv.cat || r.cat === lv.cat || r.also === lv.cat)
     && words.every(w => norm(lv.scope === 'ing' ? r.ing : r.name).includes(w)));
   list.sort(sorter());
@@ -622,12 +621,8 @@ document.addEventListener('input', e => {
   if (e.target.closest('[data-screen="novy"]')) touched();
 });
 
-let draftTimer;
-function touched() {
-  clearTimeout(draftTimer);
-  $('#ed-draft').textContent = 'Ukládám rozepsané…';
-  draftTimer = setTimeout(() => { $('#ed-draft').textContent = 'Rozepsané uloženo'; }, 700);
-}
+// ve skutečné appce tady proběhne průběžné uložení rozepsaného receptu
+function touched() {}
 function toast(msg) {
   const t = $('#toast'); t.textContent = msg; t.hidden = false;
   t.animate([{ opacity: 0, transform: 'translate(-50%, 16px) scale(.96)' }, { opacity: 1, transform: 'translate(-50%, 0)' }], { duration: 380, easing: 'cubic-bezier(.32,1.4,.5,1)', fill: 'both' });
@@ -648,6 +643,7 @@ $('#ed-save').onclick = () => {
 ['Skelet zalij studenou vodou a přiveď k varu.', ''].forEach(t => $('#ed-steps').append(stepRow(t)));
 renumber();
 
+$('#cook').addEventListener('change', e => toast(e.target.checked ? 'Displej zůstane rozsvícený' : 'Displej zase může zhasnout'));
 $('#theme').onclick = () => {
   const r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
   const flip = () => { r.dataset.theme = dark ? 'light' : 'dark'; };

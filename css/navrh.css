@@ -166,6 +166,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- mobil: plovoucí dok ---------- */
 .dock {
+  view-transition-name: dock;
   position: fixed; z-index: 30; left: 0; right: 0;
   bottom: calc(env(safe-area-inset-bottom) + 14px);
   display: flex; justify-content: center; align-items: center; gap: 10px;
@@ -233,7 +234,7 @@ a { color: inherit; text-decoration: none; }
 /* dlaždice kategorií */
 .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .tile {
-  position: relative; display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; width: 100%; text-align: left; font: inherit; display: flex; flex-direction: column; justify-content: space-between;
   min-height: 108px; padding: 14px 16px; border-radius: 24px; color: #fff; overflow: hidden;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35);
 }
@@ -288,15 +289,22 @@ a { color: inherit; text-decoration: none; }
 .stars { display: inline-flex; gap: 1px; color: var(--star); }
 .stars .ic { width: 15px; height: 15px; }
 
-.cook-bar {
-  position: fixed; z-index: 30; left: 0; right: 0;
-  bottom: calc(env(safe-area-inset-bottom) + 14px);
-  display: flex; justify-content: center; gap: 10px; pointer-events: none;
+/* Vařím: přepínač zámku displeje přímo v kartě */
+.cook { cursor: pointer; }
+.cook-ic { width: 40px; height: 40px; flex: none; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); }
+.cook-ic .ic { width: 22px; height: 22px; }
+.switch {
+  appearance: none; -webkit-appearance: none; flex: none; margin: 0; cursor: pointer;
+  position: relative; width: 51px; height: 31px; border-radius: 999px; background: var(--fill);
+  transition: background-color .25s;
 }
-.cook-bar > * { pointer-events: auto; }
-.cook-bar .pill { height: 56px; padding: 0 26px; color: var(--ink); }
-.cook-bar .pill .ic { color: var(--accent); }
-.cook-bar .round { width: 56px; height: 56px; }
+.switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%;
+  background: #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, .15), 0 1px 1px rgba(0, 0, 0, .1);
+  transition: transform .45s var(--spring);
+}
+.switch:checked { background: var(--accent); }
+.switch:checked::after { transform: translateX(20px); }
 
 /* ---------- nákup ---------- */
 .segmented { position: relative; display: flex; padding: 3px; border-radius: 12px; background: var(--fill); }
@@ -417,11 +425,13 @@ textarea.ed-in { height: auto; min-height: 38px; padding: 8px 10px; resize: none
 }
 
 /* ---------- přechody mezi obrazovkami (View Transitions) ---------- */
-::view-transition-old(root) { animation: .22s var(--out) both fade-out; }
-::view-transition-new(root) { animation: .38s var(--out) both rise-in; }
+::view-transition-old(root) { animation: .3s cubic-bezier(.4, 0, .2, 1) both fade-out; }
+::view-transition-new(root) { animation: .42s cubic-bezier(.4, 0, .2, 1) .06s both fade-in; }
 ::view-transition-group(hero) { animation-duration: .5s; animation-timing-function: var(--out); }
 ::view-transition-old(hero), ::view-transition-new(hero) { height: 100%; }
-::view-transition-group(dock) { animation: none; }
+::view-transition-group(dock), ::view-transition-group(sidebar) { animation: none; }
+::view-transition-old(dock), ::view-transition-old(sidebar) { display: none; }
+::view-transition-new(dock), ::view-transition-new(sidebar) { animation: none; }
 
 /* editor vyjíždí zespodu jako list, plocha pod ním ustoupí */
 html[data-vt="up"]::view-transition-old(root) { animation: .5s var(--out) both recede; }
@@ -433,12 +443,13 @@ html[data-vt="down"]::view-transition-new(root) { animation: .4s var(--out) both
 @keyframes recede { to { transform: scale(.94); opacity: .5; } }
 @keyframes unrecede { from { transform: scale(.94); opacity: .5; } }
 @keyframes fade-out { to { opacity: 0; } }
+@keyframes fade-in { from { opacity: 0; } }
 @keyframes rise-in { from { opacity: 0; transform: translateY(14px); } }
 
 /* ---------- desktop ---------- */
 .sidebar { display: none; }
 @media (min-width: 960px) {
-  .dock, .cook-bar .round.only-mobile { display: none; }
+  .dock { display: none; }
   .app { display: grid; grid-template-columns: 264px 1fr; }
   .sidebar {
     display: flex; flex-direction: column; gap: 2px;
@@ -474,8 +485,6 @@ html[data-vt="down"]::view-transition-new(root) { animation: .4s var(--out) both
   .recipe-title { text-align: left; padding: 22px 4px 0; }
   .recipe-title .t-large { font-size: 34px; }
   .recipe-layout > :last-child > .section:first-child { margin-top: 0; }
-  .cook-bar { position: static; justify-content: flex-start; margin-top: 14px; }
-  .cook-bar .pill { height: 48px; }
 
   .only-mobile { display: none; }
   .ed-grip { display: grid; }
@@ -496,3 +505,5 @@ html[data-vt="down"]::view-transition-new(root) { animation: .4s var(--out) both
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after, ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; transition: none !important; }
 }
+
+#r-list > .tiles { margin-top: 18px; }
