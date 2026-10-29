@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="css/navrh.css">
 <style>
   /* jen pro návrh: přepínač světlý/tmavý */
-  .demo-theme { position: fixed; z-index: 60; top: calc(env(safe-area-inset-top) + 10px); left: 50%; transform: translateX(-50%); height: 30px; padding: 0 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .demo-theme { position: fixed; z-index: 60; bottom: calc(env(safe-area-inset-bottom) + 92px); left: 10px; height: 30px; padding: 0 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
   [data-screen] { display: none; }
   [data-screen].on { display: block; }
 </style>
@@ -36,6 +36,9 @@
     <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
     <symbol id="i-flame" viewBox="0 0 24 24"><path fill="currentColor" d="M12.6 2.2c.4-.3 1-.1 1.1.4.6 2.6 2 4 3.4 5.6 1.5 1.7 2.9 3.6 2.9 6.6A7.9 7.9 0 0 1 12 22.5a7.9 7.9 0 0 1-8-7.7c0-2.4 1-4.4 2.6-5.9.4-.4 1-.1 1.1.4.2 1.2.8 2.2 1.7 2.8-.3-3.6 1.2-7.4 3.2-9.9z"/></symbol>
     <symbol id="i-sort" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M4 7h16M7 12h10M10 17h4"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M7 7l10 10M17 7 7 17"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path fill="currentColor" d="M9.2 3.5h5.6c.6 0 1.1.3 1.4.8l1 1.7H20c1.1 0 2 .9 2 2V18c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2h2.8l1-1.7c.3-.5.8-.8 1.4-.8zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></symbol>
+    <symbol id="i-grip" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></g></symbol>
     <symbol id="i-gear" viewBox="0 0 24 24"><path fill="currentColor" d="M10.3 2.6c.2-.9 1-1.6 1.9-1.6h-.4c.9 0 1.7.7 1.9 1.6l.3 1.4c.7.2 1.3.5 1.9.9l1.3-.6c.9-.4 1.9-.1 2.4.7l.2.3c.5.8.4 1.9-.4 2.5l-1.1.9c.1.7.1 1.4 0 2.1l1.1.9c.7.6.9 1.7.4 2.5l-.2.3c-.5.8-1.5 1.1-2.4.7l-1.3-.6c-.6.4-1.2.7-1.9.9l-.3 1.4c-.2.9-1 1.6-1.9 1.6h-.4c-.9 0-1.7-.7-1.9-1.6l-.3-1.4c-.7-.2-1.3-.5-1.9-.9l-1.3.6c-.9.4-1.9.1-2.4-.7l-.2-.3c-.5-.8-.4-1.9.4-2.5l1.1-.9a7 7 0 0 1 0-2.1l-1.1-.9c-.7-.6-.9-1.7-.4-2.5l.2-.3c.5-.8 1.5-1.1 2.4-.7l1.3.6c.6-.4 1.2-.7 1.9-.9zM12 14.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" transform="translate(0 1)"/></symbol>
   </defs>
 </svg>
@@ -51,7 +54,7 @@
     <a class="side-link" href="#domu" data-nav="domu"><svg class="ic"><use href="#i-home"/></svg>Domů</a>
     <a class="side-link" href="#recepty" data-nav="recepty"><svg class="ic"><use href="#i-book"/></svg>Recepty</a>
     <a class="side-link" href="#nakup" data-nav="nakup"><svg class="ic"><use href="#i-bag"/></svg>Nákup</a>
-    <a class="pill pill-accent side-add press" href="#domu"><svg class="ic"><use href="#i-plus"/></svg>Nový recept</a>
+    <a class="pill pill-accent side-add press" href="#novy"><svg class="ic"><use href="#i-plus"/></svg>Nový recept</a>
     <a class="side-foot" href="#domu"><span class="avatar">L</span><span style="flex:1"><span class="t-head" style="display:block;font-size:15px">Lukáš</span><span class="t-foot">Hateclub</span></span><svg class="ic" style="color:var(--ink-2)"><use href="#i-gear"/></svg></a>
   </aside>
 
@@ -141,12 +144,12 @@
     <div class="chips" id="chips" role="group" aria-label="Kategorie"></div>
     <div class="sort-row"><span class="t-foot" id="sort-label">Nejnovější nahoře</span></div>
 
-    <div class="r-list" id="r-list"></div>
+    <div id="r-list"></div>
     <div class="empty" id="empty" hidden>
       <span class="emoji">🔍</span>
       <p class="t-head">Nic takového tu zatím není</p>
       <p class="t-sub">Zkus jiné slovo nebo hledej podle surovin.</p>
-      <a class="pill pill-soft pill-sm press" href="#domu">Přidat nový recept</a>
+      <a class="pill pill-soft pill-sm press" href="#novy">Přidat nový recept</a>
     </div>
   </section>
 
@@ -267,7 +270,70 @@
     </div>
   </section>
 
+
+  <!-- ============ NOVÝ RECEPT ============ -->
+  <section class="screen editor" data-screen="novy">
+    <div class="ed-bar glass">
+      <button class="ed-cancel press" id="ed-cancel">Zrušit</button>
+      <div class="ed-title"><span class="t-head">Nový recept</span><span class="t-foot" id="ed-draft">Rozepsaný recept se ukládá sám</span></div>
+      <button class="pill pill-accent pill-sm press" id="ed-save">Uložit</button>
+    </div>
+
+    <div class="ed-layout">
+      <div>
+        <label class="card ed-photo press" id="ed-photo">
+          <input type="file" accept="image/*" hidden>
+          <span class="art" id="ed-art" style="background:var(--cat-3)"><span class="emoji" id="ed-emoji">🍲</span></span>
+          <span class="ed-photo-btn glass"><svg class="ic"><use href="#i-camera"/></svg>Přidat fotku</span>
+        </label>
+
+        <div class="card ed-card">
+          <input class="ed-name" id="ed-name" placeholder="Název receptu" aria-label="Název receptu" autocomplete="off">
+        </div>
+
+        <div class="ed-block">
+          <h2 class="ed-label">Kategorie</h2>
+          <div class="chips ed-chips" id="ed-cats" role="group" aria-label="Kategorie"></div>
+        </div>
+
+        <div class="facts">
+          <div class="card"><div class="card-label"><svg class="ic"><use href="#i-clock"/></svg>Čas</div>
+            <div class="ed-time"><input id="ed-time" inputmode="numeric" value="45" aria-label="Čas v minutách"><span class="t-sub">min</span></div></div>
+          <div class="card"><div class="card-label"><svg class="ic"><use href="#i-people"/></svg>Porce</div>
+            <div class="stepper"><button class="press" type="button" data-ed-step="-1" aria-label="Méně porcí"><svg class="ic"><use href="#i-minus"/></svg></button><output id="ed-portions">4</output><button class="press" type="button" data-ed-step="1" aria-label="Více porcí"><svg class="ic"><use href="#i-plus"/></svg></button></div></div>
+        </div>
+
+        <div class="ed-block">
+          <h2 class="ed-label">Uložit do kuchařky</h2>
+          <div class="chips ed-chips" id="ed-groups">
+            <button class="chip press" type="button" aria-pressed="true">Hateclub</button>
+            <button class="chip press" type="button" aria-pressed="false">Rodina</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section">
+          <div class="section-head"><h2 class="t-title">Suroviny</h2><span class="t-foot" id="ed-ing-count"></span></div>
+          <div class="card">
+            <ul class="rows ed-rows" id="ed-ings"></ul>
+            <button class="ed-add press" type="button" id="ed-add-ing"><svg class="ic"><use href="#i-plus"/></svg>Přidat surovinu</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><h2 class="t-title">Postup</h2><span class="t-foot" id="ed-step-count"></span></div>
+          <div class="card">
+            <ol class="rows ed-rows" id="ed-steps"></ol>
+            <button class="ed-add press" type="button" id="ed-add-step"><svg class="ic"><use href="#i-plus"/></svg>Přidat krok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   </main>
+  <div class="toast glass" id="toast" role="status" hidden></div>
 
   <!-- mobil: plovoucí dok -->
   <nav class="dock" id="dock" aria-label="Hlavní">
@@ -277,7 +343,7 @@
       <a class="tab" href="#recepty" data-nav="recepty"><svg class="ic"><use href="#i-book"/></svg>Recepty</a>
       <a class="tab" href="#nakup" data-nav="nakup"><svg class="ic"><use href="#i-bag"/></svg>Nákup</a>
     </div>
-    <a class="fab press" href="#domu" aria-label="Nový recept"><svg class="ic"><use href="#i-plus"/></svg></a>
+    <a class="fab press" href="#novy" aria-label="Nový recept"><svg class="ic"><use href="#i-plus"/></svg></a>
   </nav>
 </div>
 
@@ -289,13 +355,18 @@ function paint() {
   const s = location.hash.slice(1) || 'domu';
   $$('[data-screen]').forEach(el => el.classList.toggle('on', el.dataset.screen === s));
   $$('[data-nav]').forEach(el => el.dataset.nav === s ? el.setAttribute('aria-current', 'page') : el.removeAttribute('aria-current'));
-  $('#dock').hidden = s === 'recept';
+  $('#dock').hidden = s === 'recept' || s === 'novy';
   $('#dock').classList.remove('is-away');
   scrollTo(0, 0);
   moveIndicator(); moveSeg();
+  if (s === 'novy') $$('#ed-steps textarea').forEach(t => { t.style.height = 'auto'; t.style.height = t.scrollHeight + 'px'; });
 }
 
+let prevHash = location.hash;
 function go() {
+  // editor vyjíždí zespodu jako list, při zavření sjede dolů
+  document.documentElement.dataset.vt = location.hash === '#novy' ? 'up' : prevHash === '#novy' ? 'down' : '';
+  prevHash = location.hash;
   const into = location.hash === '#recept', art = heroFrom?.matches('.art') ? heroFrom : heroFrom?.querySelector('.art');
   if (!document.startViewTransition) return paint();
   if (art) art.style.viewTransitionName = 'hero';
@@ -374,7 +445,7 @@ $('#add-item').addEventListener('submit', e => {
 // klávesnice (desktop): „/“ hledání, Esc zpět z receptu
 addEventListener('keydown', e => {
   if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); (innerWidth >= 960 ? $('#side-search') : $('#q')).focus(); }
-  if (e.key === 'Escape' && location.hash === '#recept') location.hash = '#domu';
+  if (e.key === 'Escape' && (location.hash === '#recept' || location.hash === '#novy')) closeEditorOr('#domu');
 });
 
 
@@ -394,28 +465,55 @@ function renderChips() {
   $('#chips').innerHTML = [['', 'Vše', '']].concat(CATS.map(([c, e]) => [c, c, e]))
     .map(([c, label, e]) => `<button class="chip press" aria-pressed="${lv.cat === c}" data-chip="${c}">${e ? `<span>${e}</span>` : ''}${label}</button>`).join('');
 }
-function renderList(animate) {
-  const words = norm(lv.q).split(/\s+/).filter(Boolean);
-  let list = RECIPES.filter(r => (!lv.cat || r.cat === lv.cat || r.also === lv.cat)
-    && words.every(w => norm(lv.scope === 'ing' ? r.ing : r.name).includes(w)));
-  list.sort(lv.sort === 'best' ? (a, b) => b.stars - a.stars : lv.sort === 'az' ? (a, b) => a.name.localeCompare(b.name, 'cs') : (a, b) => a.age - b.age);
-  const n = list.length;
-  $('#list-count').textContent = `${n} ${n === 1 ? 'recept' : n > 1 && n < 5 ? 'recepty' : 'receptů'}${lv.cat ? ' v kategorii ' + lv.cat : ''}`;
-  $('#sort-label').textContent = SORTS[lv.sort];
-  $('#empty').hidden = n > 0;
-  $('#r-list').innerHTML = list.map(r => `
+const cardHtml = r => `
     <a class="card r-card press" href="#recept" data-hero>
       <span class="art" style="background:var(--cat-${r.bg})"><span class="emoji">${r.emoji}</span></span>
       <span class="r-body">
         <span class="t-head">${r.name}</span>
-        <span class="t-foot">${r.cat} · ${r.who}</span>
+        <span class="t-foot">${r.who}</span>
         <span class="r-meta"><span class="meta-item"><svg class="ic"><use href="#i-clock"/></svg>${r.time}</span>${r.stars ? `<span class="score"><svg class="ic"><use href="#i-star"/></svg>${String(r.stars).replace('.', ',')}</span>` : '<span class="t-foot">Bez hodnocení</span>'}</span>
       </span>
-    </a>`).join('');
-  if (animate) $$('#r-list .r-card').forEach((el, i) => el.animate(
-    [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }],
-    { duration: 380, delay: i * 40, easing: 'cubic-bezier(.2,.9,.25,1)', fill: 'backwards' }));
+    </a>`;
+const sorter = () => lv.sort === 'best' ? (a, b) => b.stars - a.stars : lv.sort === 'az' ? (a, b) => a.name.localeCompare(b.name, 'cs') : (a, b) => a.age - b.age;
+
+// bez hledání a bez vybrané kategorie: kategorie pod sebou, v každé její recepty
+function renderGrouped() {
+  $('#list-count').textContent = `${RECIPES.length} receptů v ${CATS.length} kategoriích`;
+  $('#sort-label').textContent = SORTS[lv.sort] + ' v každé kategorii';
+  $('#empty').hidden = true;
+  $('#r-list').innerHTML = CATS.map(([c, e]) => {
+    const list = RECIPES.filter(r => r.cat === c || r.also === c).sort(sorter());
+    return `<section class="r-group">
+      <div class="section-head"><h2 class="t-title r-group-title"><span class="cat-dot">${e}</span>${c}</h2>${list.length ? `<button class="link" data-open-cat="${c}">Vše (${list.length})</button>` : ''}</div>
+      ${list.length ? `<div class="r-list">${list.slice(0, 3).map(cardHtml).join('')}</div>`
+        : `<a class="card r-empty press" href="#novy"><span class="t-sub">Zatím tu není žádný recept</span><span class="link">Přidat</span></a>`}
+    </section>`;
+  }).join('');
 }
+function renderList(animate) {
+  const words = norm(lv.q).split(/\s+/).filter(Boolean);
+  $('#r-list').classList.toggle('r-list', !!(lv.cat || words.length));
+  if (!lv.cat && !words.length) { renderGrouped(); if (animate) stagger('#r-list .r-group'); return; }
+  let list = RECIPES.filter(r => (!lv.cat || r.cat === lv.cat || r.also === lv.cat)
+    && words.every(w => norm(lv.scope === 'ing' ? r.ing : r.name).includes(w)));
+  list.sort(sorter());
+  const n = list.length;
+  $('#list-count').textContent = `${n} ${n === 1 ? 'recept' : n > 1 && n < 5 ? 'recepty' : 'receptů'}${lv.cat ? ' v kategorii ' + lv.cat : ''}`;
+  $('#sort-label').textContent = SORTS[lv.sort];
+  $('#empty').hidden = n > 0;
+  $('#r-list').innerHTML = list.map(cardHtml).join('');
+  if (animate) stagger('#r-list .r-card');
+}
+function stagger(sel) {
+  $$(sel).forEach((el, i) => el.animate(
+    [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }],
+    { duration: 380, delay: Math.min(i, 8) * 40, easing: 'cubic-bezier(.2,.9,.25,1)', fill: 'backwards' }));
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-open-cat]'); if (!b) return;
+  lv.cat = b.dataset.openCat; renderChips(); renderList(true); scrollTo({ top: 0, behavior: 'smooth' });
+  $('#chips [aria-pressed="true"]')?.scrollIntoView({ inline: 'center', block: 'nearest' });
+});
 $('#chips').addEventListener('click', e => {
   const b = e.target.closest('[data-chip]'); if (!b) return;
   lv.cat = b.dataset.chip; $$('#chips .chip').forEach(x => x.setAttribute('aria-pressed', x === b));
@@ -439,6 +537,116 @@ document.addEventListener('click', e => {
   renderChips(); renderList(false);
 }, true);
 renderChips(); renderList(false);
+
+
+// ---------- Nový recept ----------
+const UNITS = ['—', 'ks', 'g', 'kg', 'ml', 'l', 'lžička', 'lžíce'];
+let backTo = '#domu';
+addEventListener('hashchange', e => { if (location.hash === '#novy') backTo = new URL(e.oldURL).hash || '#domu'; });
+function closeEditorOr(fallback) { location.hash = location.hash === '#novy' ? backTo : fallback; }
+$('#ed-cancel').onclick = () => closeEditorOr('#domu');
+
+$('#ed-cats').innerHTML = CATS.map(([c, e], i) => `<button class="chip press" type="button" aria-pressed="${i === 0}" data-emoji="${e}" data-bg="${[3, 5, 6, 4, 8, 1, 0, 2][i]}"><span>${e}</span>${c}</button>`).join('');
+for (const g of ['#ed-cats', '#ed-groups']) $(g).addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true');
+  const first = $('#ed-cats [aria-pressed="true"]');
+  if (g === '#ed-cats' && first) { $('#ed-art').style.background = `var(--cat-${first.dataset.bg})`; $('#ed-emoji').textContent = first.dataset.emoji; }
+  touched();
+});
+
+$('#ed-photo input').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  let img = $('#ed-art img'); if (!img) { img = document.createElement('img'); $('#ed-art').append(img); }
+  img.src = URL.createObjectURL(f); img.alt = '';
+  img.animate([{ opacity: 0, transform: 'scale(1.06)' }, { opacity: 1, transform: 'none' }], { duration: 450, easing: 'cubic-bezier(.2,.9,.25,1)' });
+  $('.ed-photo-btn').lastChild.textContent = 'Změnit fotku';
+  touched();
+});
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-ed-step]'); if (!b) return;
+  const out = $('#ed-portions'); out.value = Math.max(1, Math.min(40, +out.value + +b.dataset.edStep));
+  out.classList.remove('bump'); void out.offsetWidth; out.classList.add('bump'); touched();
+});
+
+function ingRow(name = '', qty = '', unit = '—') {
+  const li = document.createElement('li');
+  li.className = 'ed-row';
+  li.innerHTML = `<span class="ed-grip" aria-hidden="true"><svg class="ic"><use href="#i-grip"/></svg></span>
+    <input class="ed-in grow" placeholder="Surovina" value="${name}" aria-label="Surovina">
+    <input class="ed-in ed-qty" placeholder="0" inputmode="decimal" value="${qty}" aria-label="Množství">
+    <select class="ed-in ed-unit" aria-label="Jednotka">${UNITS.map(u => `<option${u === unit ? ' selected' : ''}>${u}</option>`).join('')}</select>
+    <button class="ed-remove press" type="button" aria-label="Odebrat">${'<svg class="ic"><use href="#i-close"/></svg>'}</button>`;
+  return li;
+}
+function stepRow(text = '') {
+  const li = document.createElement('li');
+  li.className = 'ed-row ed-step';
+  li.innerHTML = `<span class="check"></span>
+    <textarea class="ed-in grow" rows="1" placeholder="Co se má udělat" aria-label="Krok">${text}</textarea>
+    <button class="ed-remove press" type="button" aria-label="Odebrat">${'<svg class="ic"><use href="#i-close"/></svg>'}</button>`;
+  return li;
+}
+function renumber() {
+  $$('#ed-steps .check').forEach((c, i) => c.textContent = i + 1);
+  const ni = $$('#ed-ings li').length, ns = $$('#ed-steps li').length;
+  $('#ed-ing-count').textContent = `${ni} ${ni === 1 ? 'surovina' : ni > 1 && ni < 5 ? 'suroviny' : 'surovin'}`;
+  $('#ed-step-count').textContent = `${ns} ${ns === 1 ? 'krok' : ns > 1 && ns < 5 ? 'kroky' : 'kroků'}`;
+}
+function addRow(list, li, focus) {
+  list.append(li); renumber();
+  li.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.2,.9,.25,1)' });
+  if (focus) li.querySelector('.ed-in').focus();
+}
+$('#ed-add-ing').onclick = () => addRow($('#ed-ings'), ingRow(), true);
+$('#ed-add-step').onclick = () => addRow($('#ed-steps'), stepRow(), true);
+document.addEventListener('click', e => {
+  const b = e.target.closest('.ed-remove'); if (!b) return;
+  const li = b.closest('li'), h = li.offsetHeight;
+  li.animate([{ opacity: 1, height: h + 'px' }, { opacity: 0, height: '0px', paddingTop: '0px', paddingBottom: '0px' }], { duration: 260, easing: 'cubic-bezier(.2,.9,.25,1)' })
+    .finished.then(() => { li.remove(); renumber(); touched(); });
+});
+// Enter v surovině přidá další řádek (rychlé psaní na klávesnici)
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || e.shiftKey) return;
+  const inp = e.target.closest('#ed-ings .ed-in, #ed-steps textarea'); if (!inp) return;
+  e.preventDefault();
+  const list = inp.closest('ul, ol'), li = inp.closest('li');
+  if (li === list.lastElementChild) addRow(list, list.id === 'ed-ings' ? ingRow() : stepRow(), true);
+  else li.nextElementSibling.querySelector('.ed-in').focus();
+});
+// textarea kroku roste s textem
+document.addEventListener('input', e => {
+  if (e.target.matches('#ed-steps textarea')) { e.target.style.height = 'auto'; e.target.style.height = e.target.scrollHeight + 'px'; }
+  if (e.target.closest('[data-screen="novy"]')) touched();
+});
+
+let draftTimer;
+function touched() {
+  clearTimeout(draftTimer);
+  $('#ed-draft').textContent = 'Ukládám rozepsané…';
+  draftTimer = setTimeout(() => { $('#ed-draft').textContent = 'Rozepsané uloženo'; }, 700);
+}
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.hidden = false;
+  t.animate([{ opacity: 0, transform: 'translate(-50%, 16px) scale(.96)' }, { opacity: 1, transform: 'translate(-50%, 0)' }], { duration: 380, easing: 'cubic-bezier(.32,1.4,.5,1)', fill: 'both' });
+  clearTimeout(t._h); t._h = setTimeout(() => t.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'both' }).finished.then(() => t.hidden = true), 2200);
+}
+$('#ed-save').onclick = () => {
+  const name = $('#ed-name');
+  if (!name.value.trim()) {
+    name.focus();
+    name.closest('.card').animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(7px)' }, { transform: 'translateX(-4px)' }, { transform: 'none' }], { duration: 380 });
+    toast('Recept potřebuje název');
+    return;
+  }
+  toast('Recept uložen');
+  location.hash = '#recept';
+};
+[['kuřecí skelet', '1', 'ks'], ['mrkev', '3', 'ks'], ['', '', '—']].forEach(a => $('#ed-ings').append(ingRow(...a)));
+['Skelet zalij studenou vodou a přiveď k varu.', ''].forEach(t => $('#ed-steps').append(stepRow(t)));
+renumber();
 
 $('#theme').onclick = () => {
   const r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
