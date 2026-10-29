@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kuchařka – návrh vzhledu</title>
+<meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/navrh.css">
+<style>
+  /* jen pro návrh: přepínač světlý/tmavý */
+  .demo-theme { position: fixed; z-index: 60; top: calc(env(safe-area-inset-top) + 10px); left: 50%; transform: translateX(-50%); height: 30px; padding: 0 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  [data-screen] { display: none; }
+  [data-screen].on { display: block; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path fill="currentColor" d="M11.3 2.7a1 1 0 0 1 1.4 0l8.6 8.2c.6.6.2 1.6-.7 1.6H19v7.3c0 .9-.7 1.7-1.7 1.7h-3.1v-5.6c0-.6-.4-1-1-1h-2.4c-.6 0-1 .4-1 1v5.6H6.7c-1 0-1.7-.8-1.7-1.7v-7.3H3.4c-.9 0-1.3-1-.7-1.6z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path fill="currentColor" d="M4 4.6C4 3.2 5.2 2 6.6 2H19a1 1 0 0 1 1 1v15.2a1 1 0 0 1-1 1H6.6a.9.9 0 0 0 0 1.8H19a1 1 0 1 1 0 2H6.6A2.6 2.6 0 0 1 4 20.4zM9 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path fill="currentColor" d="M7 7.5V7a5 5 0 0 1 10 0v.5h2.2c.8 0 1.4.6 1.5 1.4l.8 11c.1 1-.7 1.8-1.7 1.8H4.2c-1 0-1.8-.8-1.7-1.8l.8-11c.1-.8.7-1.4 1.5-1.4zm2 0h6V7a3 3 0 0 0-6 0z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></g></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></g></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/><path d="M8 10H6.5A1.5 1.5 0 0 0 5 11.5v8A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-8a1.5 1.5 0 0 0-1.5-1.5H16"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><path fill="currentColor" d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 19.2C2 15.9 5.1 13.5 9 13.5s7 2.4 7 5.7c0 .7-.6 1.3-1.3 1.3H3.3c-.7 0-1.3-.6-1.3-1.3zm15.5 1.3c.3-.4.5-.8.5-1.3 0-2-1-3.8-2.6-5 .5-.1 1-.2 1.6-.2 2.8 0 5 1.8 5 4.3 0 1.2-.6 2.2-1.6 2.2z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/></symbol>
+    <symbol id="i-star-half" viewBox="0 0 24 24"><path fill="currentColor" opacity=".28" d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2z"/><path fill="currentColor" d="M12 2.8v14.4l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path fill="currentColor" d="M12.6 2.2c.4-.3 1-.1 1.1.4.6 2.6 2 4 3.4 5.6 1.5 1.7 2.9 3.6 2.9 6.6A7.9 7.9 0 0 1 12 22.5a7.9 7.9 0 0 1-8-7.7c0-2.4 1-4.4 2.6-5.9.4-.4 1-.1 1.1.4.2 1.2.8 2.2 1.7 2.8-.3-3.6 1.2-7.4 3.2-9.9z"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path fill="currentColor" d="M10.3 2.6c.2-.9 1-1.6 1.9-1.6h-.4c.9 0 1.7.7 1.9 1.6l.3 1.4c.7.2 1.3.5 1.9.9l1.3-.6c.9-.4 1.9-.1 2.4.7l.2.3c.5.8.4 1.9-.4 2.5l-1.1.9c.1.7.1 1.4 0 2.1l1.1.9c.7.6.9 1.7.4 2.5l-.2.3c-.5.8-1.5 1.1-2.4.7l-1.3-.6c-.6.4-1.2.7-1.9.9l-.3 1.4c-.2.9-1 1.6-1.9 1.6h-.4c-.9 0-1.7-.7-1.9-1.6l-.3-1.4c-.7-.2-1.3-.5-1.9-.9l-1.3.6c-.9.4-1.9.1-2.4-.7l-.2-.3c-.5-.8-.4-1.9.4-2.5l1.1-.9a7 7 0 0 1 0-2.1l-1.1-.9c-.7-.6-.9-1.7-.4-2.5l.2-.3c.5-.8 1.5-1.1 2.4-.7l1.3.6c.6-.4 1.2-.7 1.9-.9zM12 14.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" transform="translate(0 1)"/></symbol>
+  </defs>
+</svg>
+
+<button class="demo-theme glass" id="theme">Světlý / tmavý</button>
+
+<div class="app">
+
+  <!-- desktop: postranní panel -->
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">🍳</span>Kuchařka</div>
+    <label class="field"><svg class="ic"><use href="#i-search"/></svg><input id="side-search" placeholder="Hledat recept nebo surovinu" aria-label="Hledat"><kbd>/</kbd></label>
+    <a class="side-link" href="#domu" data-nav="domu"><svg class="ic"><use href="#i-home"/></svg>Domů</a>
+    <a class="side-link" href="#domu" data-nav="recepty"><svg class="ic"><use href="#i-book"/></svg>Recepty</a>
+    <a class="side-link" href="#nakup" data-nav="nakup"><svg class="ic"><use href="#i-bag"/></svg>Nákup</a>
+    <a class="pill pill-accent side-add press" href="#domu"><svg class="ic"><use href="#i-plus"/></svg>Nový recept</a>
+    <a class="side-foot" href="#domu"><span class="avatar">L</span><span style="flex:1"><span class="t-head" style="display:block;font-size:15px">Lukáš</span><span class="t-foot">Hateclub</span></span><svg class="ic" style="color:var(--ink-2)"><use href="#i-gear"/></svg></a>
+  </aside>
+
+  <main>
+
+  <!-- ============ DOMŮ ============ -->
+  <section class="screen" data-screen="domu">
+    <header class="screen-head">
+      <div>
+        <p class="t-sub">Dobrý den, Lukáši</p>
+        <h1 class="t-large">Uvař něco dobrého</h1>
+      </div>
+      <a class="avatar press" href="#domu" aria-label="Profil a nastavení">L</a>
+    </header>
+
+    <div class="home-grid">
+      <div class="section">
+        <a class="card feature press" href="#recept" data-hero>
+          <div class="art" style="background:var(--cat-0)"><span class="emoji">🍲</span></div>
+          <div class="body">
+            <p class="t-foot">Recept dne</p>
+            <h2 class="t-title">Kuřecí polévka s nudlemi</h2>
+            <div class="meta">
+              <span class="meta-item"><svg class="ic"><use href="#i-clock"/></svg>45 min</span>
+              <span class="meta-item"><svg class="ic"><use href="#i-people"/></svg>6 porcí</span>
+              <span class="score"><svg class="ic"><use href="#i-star"/></svg>4,0</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h2 class="t-title">Nejoblíbenější</h2><a class="link" href="#domu">Vše</a></div>
+        <div class="card">
+          <ul class="rows">
+            <li><a class="art thumb" href="#recept" data-hero style="background:var(--cat-4)"><span class="emoji">🦪</span></a><span class="grow"><span class="t-head" style="display:block">Polévka z mušlí</span><span class="t-foot">Eva</span></span><span class="score"><svg class="ic"><use href="#i-star"/></svg>5,0</span></li>
+            <li><a class="art thumb" href="#recept" data-hero style="background:var(--cat-5)"><span class="emoji">🍽️</span></a><span class="grow"><span class="t-head" style="display:block">Hovězí guláš</span><span class="t-foot">Petr</span></span><span class="score"><svg class="ic"><use href="#i-star"/></svg>4,8</span></li>
+            <li><a class="art thumb" href="#recept" data-hero style="background:var(--cat-0)"><span class="emoji">🍲</span></a><span class="grow"><span class="t-head" style="display:block">Kuřecí polévka s nudlemi</span><span class="t-foot">Eva</span></span><span class="score"><svg class="ic"><use href="#i-star"/></svg>4,0</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2 class="t-title">Nejnovější</h2><a class="link" href="#domu">Vše</a></div>
+      <div class="rail">
+        <a class="card mini press" href="#recept" data-hero><div class="art" style="background:var(--cat-6)"><span class="emoji">🥞</span></div><div class="body"><h3 class="t-head">Palačinky</h3><p class="t-foot">25 min</p></div></a>
+        <a class="card mini press" href="#recept" data-hero><div class="art" style="background:var(--cat-4)"><span class="emoji">🦪</span></div><div class="body"><h3 class="t-head">Polévka z mušlí</h3><p class="t-foot">40 min</p></div></a>
+        <a class="card mini press" href="#recept" data-hero><div class="art" style="background:var(--cat-0)"><span class="emoji">🍲</span></div><div class="body"><h3 class="t-head">Kuřecí polévka s nudlemi</h3><p class="t-foot">45 min</p></div></a>
+        <a class="card mini press" href="#recept" data-hero><div class="art" style="background:var(--cat-5)"><span class="emoji">🍽️</span></div><div class="body"><h3 class="t-head">Hovězí guláš</h3><p class="t-foot">2 h 30 min</p></div></a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2 class="t-title">Kategorie</h2><a class="link" href="#domu">Upravit</a></div>
+      <div class="tiles">
+        <a class="tile press" href="#domu" style="background:var(--cat-3)"><span class="emoji">🍲</span><span class="count">2</span><span class="name">Polévky</span></a>
+        <a class="tile press" href="#domu" style="background:var(--cat-5)"><span class="emoji">🍽️</span><span class="count">1</span><span class="name">Hlavní jídla</span></a>
+        <a class="tile press" href="#domu" style="background:var(--cat-6)"><span class="emoji">🍰</span><span class="count">1</span><span class="name">Dezerty</span></a>
+        <a class="tile press" href="#domu" style="background:var(--cat-4)"><span class="emoji">🦪</span><span class="count">1</span><span class="name">Mořské plody</span></a>
+        <a class="tile press" href="#domu" style="background:var(--cat-8)"><span class="emoji">🥗</span><span class="count">0</span><span class="name">Salátky</span></a>
+        <a class="tile press" href="#domu" style="background:var(--cat-1)"><span class="emoji">🥬</span><span class="count">0</span><span class="name">Bezmasá jídla</span></a>
+        <a class="tile press" href="#domu" style="background:var(--cat-0)"><span class="emoji">🍳</span><span class="count">0</span><span class="name">Snídaně</span></a>
+        <a class="tile press" href="#domu" style="background:var(--cat-2)"><span class="emoji">🍹</span><span class="count">0</span><span class="name">Nápoje</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RECEPT ============ -->
+  <section class="screen" data-screen="recept">
+    <div class="topbar">
+      <a class="round glass press" href="#domu" data-back aria-label="Zpět"><svg class="ic"><use href="#i-back"/></svg></a>
+      <div class="group">
+        <button class="round glass press" aria-label="Sdílet"><svg class="ic"><use href="#i-share"/></svg></button>
+        <button class="round glass press" aria-label="Další akce"><svg class="ic"><use href="#i-more"/></svg></button>
+      </div>
+    </div>
+
+    <div class="recipe-layout">
+      <div class="aside">
+        <div class="hero"><div class="art" id="hero-art" style="background:var(--cat-0)"><span class="emoji">🍲</span></div></div>
+        <div class="recipe-title">
+          <h1 class="t-large">Kuřecí polévka s nudlemi</h1>
+          <span class="byline"><span class="avatar avatar-sm" style="background:var(--cat-6)">E</span>Eva přidala do Polévek</span>
+        </div>
+        <div class="facts">
+          <div class="card"><div class="card-label"><svg class="ic"><use href="#i-clock"/></svg>Čas</div><div class="card-value">45 min</div></div>
+          <div class="card"><div class="card-label"><svg class="ic"><use href="#i-people"/></svg>Porce</div>
+            <div class="stepper"><button class="press" data-step="-1" aria-label="Méně porcí"><svg class="ic"><use href="#i-minus"/></svg></button><output id="portions">6</output><button class="press" data-step="1" aria-label="Více porcí"><svg class="ic"><use href="#i-plus"/></svg></button></div></div>
+        </div>
+        <div class="card buy">
+          <div class="grow"><p class="t-head">Nakoupit suroviny</p><p class="t-sub">5 položek do nákupního seznamu</p></div>
+          <button class="pill pill-accent pill-sm press">Do nákupu</button>
+        </div>
+        <div class="cook-bar">
+          <button class="pill glass press"><svg class="ic"><use href="#i-flame"/></svg>Vařím</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="section">
+          <div class="section-head"><h2 class="t-title">Suroviny</h2><span class="t-foot" id="for-portions">na 6 porcí</span></div>
+          <div class="card">
+            <ul class="rows" id="ingredients">
+              <li><span class="grow">kuřecí skelet</span><span class="end" data-q="1" data-u="">1</span></li>
+              <li><span class="grow">mrkev</span><span class="end" data-q="3" data-u="">3</span></li>
+              <li><span class="grow">celer</span><span class="end" data-q="0.5" data-u="">½</span></li>
+              <li><span class="grow">vlasové nudle</span><span class="end" data-q="100" data-u=" g">100 g</span></li>
+              <li><span class="grow">sůl a pepř</span><span class="end"></span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><h2 class="t-title">Postup</h2><span class="t-foot" id="steps-done">0 ze 4 hotovo</span></div>
+          <div class="card">
+            <ol class="steps" id="steps">
+              <li><span class="check">1<svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="step-text">Skelet zalij studenou vodou, přiveď k varu a sbírej pěnu.</span></li>
+              <li><span class="check">2<svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="step-text">Přidej očištěnou zeleninu a vař 30 minut.</span></li>
+              <li><span class="check">3<svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="step-text">Vývar sceď, maso obral a nakrájej zeleninu.</span></li>
+              <li><span class="check">4<svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="step-text">Uvař nudle zvlášť a přidej je až do talíře.</span></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><h2 class="t-title">Hodnocení</h2><button class="link press">Ohodnotit</button></div>
+          <div class="card">
+            <div class="review"><div class="review-head"><span class="avatar avatar-sm" style="background:var(--cat-4)">P</span><span class="t-head">Petr</span><span class="stars"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star-half"/></svg></span></div><p>Jako od babičky. Přidal jsem trochu zázvoru.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NÁKUP ============ -->
+  <section class="screen" data-screen="nakup">
+    <header class="screen-head">
+      <div>
+        <h1 class="t-large">Nákup</h1>
+      </div>
+      <button class="round glass press" aria-label="Možnosti seznamu"><svg class="ic"><use href="#i-more"/></svg></button>
+    </header>
+    <p class="t-sub" style="padding:0 4px 14px" id="shop-count">6 položek k nákupu</p>
+
+    <div class="stack">
+      <div class="segmented" id="lists" role="group" aria-label="Seznam">
+        <span class="seg-indicator"></span>
+        <button aria-pressed="true">Můj</button>
+        <button aria-pressed="false">S Evou</button>
+        <button aria-pressed="false">Chata</button>
+      </div>
+      <form class="field" id="add-item"><input placeholder="Přidat položku" aria-label="Přidat položku"><button class="round press" aria-label="Přidat"><svg class="ic"><use href="#i-plus"/></svg></button></form>
+    </div>
+
+    <div class="shop-layout" id="shop">
+      <div class="section">
+        <div class="dept-head"><span class="emoji">🥕</span>Ovoce a zelenina<span class="t-foot">3</span></div>
+        <div class="card"><ul class="rows">
+          <li class="item"><span class="check"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="grow">mrkev</span><span class="qty">3 ks</span></li>
+          <li class="item"><span class="check"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="grow">celer</span><span class="qty">½ ks</span></li>
+          <li class="item"><span class="check"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="grow">česnek</span><span class="qty"></span></li>
+        </ul></div>
+      </div>
+      <div class="section">
+        <div class="dept-head"><span class="emoji">🥩</span>Maso, ryby a uzeniny<span class="t-foot">1</span></div>
+        <div class="card"><ul class="rows">
+          <li class="item"><span class="check"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="grow">kuřecí skelet</span><span class="qty">1 ks</span></li>
+        </ul></div>
+      </div>
+      <div class="section">
+        <div class="dept-head"><span class="emoji">🥛</span>Mléčné výrobky a vejce<span class="t-foot">1</span></div>
+        <div class="card"><ul class="rows">
+          <li class="item"><span class="check"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="grow">mléko</span><span class="qty">1 l</span></li>
+        </ul></div>
+      </div>
+      <div class="section">
+        <div class="dept-head"><span class="emoji">🫙</span>Trvanlivé a koření<span class="t-foot">1</span></div>
+        <div class="card"><ul class="rows">
+          <li class="item"><span class="check"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="grow">vlasové nudle</span><span class="qty">100 g</span></li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- mobil: plovoucí dok -->
+  <nav class="dock" id="dock" aria-label="Hlavní">
+    <div class="tabbar glass">
+      <span class="tab-indicator" id="tab-indicator"></span>
+      <a class="tab" href="#domu" data-nav="domu"><svg class="ic"><use href="#i-home"/></svg>Domů</a>
+      <a class="tab" href="#domu" data-nav="recepty"><svg class="ic"><use href="#i-book"/></svg>Recepty</a>
+      <a class="tab" href="#nakup" data-nav="nakup"><svg class="ic"><use href="#i-bag"/></svg>Nákup</a>
+    </div>
+    <a class="fab press" href="#domu" aria-label="Nový recept"><svg class="ic"><use href="#i-plus"/></svg></a>
+  </nav>
+</div>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+let heroFrom = null;   // karta, ze které se otevírá recept (obrázek „přeletí“ do detailu)
+
+function paint() {
+  const s = location.hash.slice(1) || 'domu';
+  $$('[data-screen]').forEach(el => el.classList.toggle('on', el.dataset.screen === s));
+  $$('[data-nav]').forEach(el => el.dataset.nav === s ? el.setAttribute('aria-current', 'page') : el.removeAttribute('aria-current'));
+  $('#dock').hidden = s === 'recept';
+  $('#dock').classList.remove('is-away');
+  scrollTo(0, 0);
+  moveIndicator(); moveSeg();
+}
+
+function go() {
+  const into = location.hash === '#recept', art = heroFrom?.matches('.art') ? heroFrom : heroFrom?.querySelector('.art');
+  if (!document.startViewTransition) return paint();
+  if (art) art.style.viewTransitionName = 'hero';
+  $('#hero-art').style.viewTransitionName = '';
+  const t = document.startViewTransition(() => {
+    if (art) art.style.viewTransitionName = '';
+    paint();
+    if (into && art) $('#hero-art').style.viewTransitionName = 'hero';
+  });
+  t.finished.finally(() => { $('#hero-art').style.viewTransitionName = ''; heroFrom = null; });
+}
+addEventListener('hashchange', go);
+document.addEventListener('click', e => { const a = e.target.closest('[data-hero]'); if (a) heroFrom = a; }, true);
+
+// klouzavá pilulka pod aktivní záložkou
+function moveIndicator() {
+  const cur = $('.tab[aria-current]'), ind = $('#tab-indicator');
+  if (!cur) { ind.style.width = '0'; return; }
+  ind.style.width = cur.offsetWidth + 'px';
+  ind.style.transform = `translateX(${cur.offsetLeft}px)`;
+}
+function moveSeg() {
+  const cur = $('#lists [aria-pressed="true"]'), ind = $('#lists .seg-indicator');
+  if (!cur || !cur.offsetWidth) return;
+  ind.style.width = cur.offsetWidth + 'px';
+  ind.style.transform = `translateX(${cur.offsetLeft - 3}px)`;
+}
+$('#lists').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  $$('#lists button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  moveSeg();
+});
+
+// dok se při čtení (posun dolů) uklidí, při posunu nahoru se vrátí
+let lastY = 0;
+addEventListener('scroll', () => {
+  const y = scrollY, dock = $('#dock');
+  if (Math.abs(y - lastY) < 8) return;
+  dock.classList.toggle('is-away', y > lastY && y > 120);
+  lastY = y;
+}, { passive: true });
+
+// porce: přepočet surovin
+const BASE = 6;
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-step]'); if (!b) return;
+  const out = $('#portions'), n = Math.max(1, Math.min(40, +out.value + +b.dataset.step));
+  out.value = n; out.classList.remove('bump'); void out.offsetWidth; out.classList.add('bump');
+  $('#for-portions').textContent = `na ${n} ${n === 1 ? 'porci' : n < 5 ? 'porce' : 'porcí'}`;
+  $$('#ingredients [data-q]').forEach(el => {
+    const v = Math.round(+el.dataset.q * n / BASE * 10) / 10;
+    el.textContent = String(v).replace('.', ',') + el.dataset.u;
+  });
+});
+
+// kroky a položky nákupu: odškrtnutí
+document.addEventListener('click', e => {
+  const li = e.target.closest('#steps li, .item'); if (!li) return;
+  li.classList.toggle('is-done');
+  const done = $$('#steps .is-done').length;
+  $('#steps-done').textContent = `${done} ze 4 hotovo`;
+  const left = $$('.item:not(.is-done)').length;
+  $('#shop-count').textContent = left ? `${left} ${left === 1 ? 'položka' : left < 5 ? 'položky' : 'položek'} k nákupu` : 'Všechno nakoupeno';
+});
+$('#add-item').addEventListener('submit', e => {
+  e.preventDefault();
+  const inp = e.target.querySelector('input'), v = inp.value.trim(); if (!v) return;
+  const tpl = $('.item').cloneNode(true);
+  tpl.classList.remove('is-done'); tpl.querySelector('.grow').textContent = v; tpl.querySelector('.qty').textContent = '';
+  tpl.animate([{ opacity: 0, transform: 'translateY(-8px)' }, { opacity: 1, transform: 'none' }], { duration: 350, easing: 'cubic-bezier(.2,.9,.25,1)' });
+  $('#shop .rows').prepend(tpl); inp.value = '';
+});
+
+// klávesnice (desktop): „/“ hledání, Esc zpět z receptu
+addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); $('#side-search').focus(); }
+  if (e.key === 'Escape' && location.hash === '#recept') location.hash = '#domu';
+});
+
+$('#theme').onclick = () => {
+  const r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const flip = () => { r.dataset.theme = dark ? 'light' : 'dark'; };
+  document.startViewTransition ? document.startViewTransition(flip) : flip();
+};
+addEventListener('resize', () => { moveIndicator(); moveSeg(); });
+paint();
+</script>
+</body>
+</html>
