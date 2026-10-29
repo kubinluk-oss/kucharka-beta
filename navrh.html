@@ -35,6 +35,7 @@
     <symbol id="i-star-half" viewBox="0 0 24 24"><path fill="currentColor" opacity=".28" d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2z"/><path fill="currentColor" d="M12 2.8v14.4l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
     <symbol id="i-flame" viewBox="0 0 24 24"><path fill="currentColor" d="M12.6 2.2c.4-.3 1-.1 1.1.4.6 2.6 2 4 3.4 5.6 1.5 1.7 2.9 3.6 2.9 6.6A7.9 7.9 0 0 1 12 22.5a7.9 7.9 0 0 1-8-7.7c0-2.4 1-4.4 2.6-5.9.4-.4 1-.1 1.1.4.2 1.2.8 2.2 1.7 2.8-.3-3.6 1.2-7.4 3.2-9.9z"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M4 7h16M7 12h10M10 17h4"/></symbol>
     <symbol id="i-gear" viewBox="0 0 24 24"><path fill="currentColor" d="M10.3 2.6c.2-.9 1-1.6 1.9-1.6h-.4c.9 0 1.7.7 1.9 1.6l.3 1.4c.7.2 1.3.5 1.9.9l1.3-.6c.9-.4 1.9-.1 2.4.7l.2.3c.5.8.4 1.9-.4 2.5l-1.1.9c.1.7.1 1.4 0 2.1l1.1.9c.7.6.9 1.7.4 2.5l-.2.3c-.5.8-1.5 1.1-2.4.7l-1.3-.6c-.6.4-1.2.7-1.9.9l-.3 1.4c-.2.9-1 1.6-1.9 1.6h-.4c-.9 0-1.7-.7-1.9-1.6l-.3-1.4c-.7-.2-1.3-.5-1.9-.9l-1.3.6c-.9.4-1.9.1-2.4-.7l-.2-.3c-.5-.8-.4-1.9.4-2.5l1.1-.9a7 7 0 0 1 0-2.1l-1.1-.9c-.7-.6-.9-1.7-.4-2.5l.2-.3c.5-.8 1.5-1.1 2.4-.7l1.3.6c.6-.4 1.2-.7 1.9-.9zM12 14.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" transform="translate(0 1)"/></symbol>
   </defs>
 </svg>
@@ -48,7 +49,7 @@
     <div class="brand"><span class="brand-mark">🍳</span>Kuchařka</div>
     <label class="field"><svg class="ic"><use href="#i-search"/></svg><input id="side-search" placeholder="Hledat recept nebo surovinu" aria-label="Hledat"><kbd>/</kbd></label>
     <a class="side-link" href="#domu" data-nav="domu"><svg class="ic"><use href="#i-home"/></svg>Domů</a>
-    <a class="side-link" href="#domu" data-nav="recepty"><svg class="ic"><use href="#i-book"/></svg>Recepty</a>
+    <a class="side-link" href="#recepty" data-nav="recepty"><svg class="ic"><use href="#i-book"/></svg>Recepty</a>
     <a class="side-link" href="#nakup" data-nav="nakup"><svg class="ic"><use href="#i-bag"/></svg>Nákup</a>
     <a class="pill pill-accent side-add press" href="#domu"><svg class="ic"><use href="#i-plus"/></svg>Nový recept</a>
     <a class="side-foot" href="#domu"><span class="avatar">L</span><span style="flex:1"><span class="t-head" style="display:block;font-size:15px">Lukáš</span><span class="t-foot">Hateclub</span></span><svg class="ic" style="color:var(--ink-2)"><use href="#i-gear"/></svg></a>
@@ -83,7 +84,7 @@
       </div>
 
       <div class="section">
-        <div class="section-head"><h2 class="t-title">Nejoblíbenější</h2><a class="link" href="#domu">Vše</a></div>
+        <div class="section-head"><h2 class="t-title">Nejoblíbenější</h2><a class="link" href="#recepty" data-sort="best">Vše</a></div>
         <div class="card">
           <ul class="rows">
             <li><a class="art thumb" href="#recept" data-hero style="background:var(--cat-4)"><span class="emoji">🦪</span></a><span class="grow"><span class="t-head" style="display:block">Polévka z mušlí</span><span class="t-foot">Eva</span></span><span class="score"><svg class="ic"><use href="#i-star"/></svg>5,0</span></li>
@@ -95,7 +96,7 @@
     </div>
 
     <div class="section">
-      <div class="section-head"><h2 class="t-title">Nejnovější</h2><a class="link" href="#domu">Vše</a></div>
+      <div class="section-head"><h2 class="t-title">Nejnovější</h2><a class="link" href="#recepty" data-sort="new">Vše</a></div>
       <div class="rail">
         <a class="card mini press" href="#recept" data-hero><div class="art" style="background:var(--cat-6)"><span class="emoji">🥞</span></div><div class="body"><h3 class="t-head">Palačinky</h3><p class="t-foot">25 min</p></div></a>
         <a class="card mini press" href="#recept" data-hero><div class="art" style="background:var(--cat-4)"><span class="emoji">🦪</span></div><div class="body"><h3 class="t-head">Polévka z mušlí</h3><p class="t-foot">40 min</p></div></a>
@@ -107,15 +108,45 @@
     <div class="section">
       <div class="section-head"><h2 class="t-title">Kategorie</h2><a class="link" href="#domu">Upravit</a></div>
       <div class="tiles">
-        <a class="tile press" href="#domu" style="background:var(--cat-3)"><span class="emoji">🍲</span><span class="count">2</span><span class="name">Polévky</span></a>
-        <a class="tile press" href="#domu" style="background:var(--cat-5)"><span class="emoji">🍽️</span><span class="count">1</span><span class="name">Hlavní jídla</span></a>
-        <a class="tile press" href="#domu" style="background:var(--cat-6)"><span class="emoji">🍰</span><span class="count">1</span><span class="name">Dezerty</span></a>
-        <a class="tile press" href="#domu" style="background:var(--cat-4)"><span class="emoji">🦪</span><span class="count">1</span><span class="name">Mořské plody</span></a>
-        <a class="tile press" href="#domu" style="background:var(--cat-8)"><span class="emoji">🥗</span><span class="count">0</span><span class="name">Salátky</span></a>
-        <a class="tile press" href="#domu" style="background:var(--cat-1)"><span class="emoji">🥬</span><span class="count">0</span><span class="name">Bezmasá jídla</span></a>
-        <a class="tile press" href="#domu" style="background:var(--cat-0)"><span class="emoji">🍳</span><span class="count">0</span><span class="name">Snídaně</span></a>
-        <a class="tile press" href="#domu" style="background:var(--cat-2)"><span class="emoji">🍹</span><span class="count">0</span><span class="name">Nápoje</span></a>
+        <a class="tile press" href="#recepty" data-cat="Polévky" style="background:var(--cat-3)"><span class="emoji">🍲</span><span class="count">2</span><span class="name">Polévky</span></a>
+        <a class="tile press" href="#recepty" data-cat="Hlavní jídla" style="background:var(--cat-5)"><span class="emoji">🍽️</span><span class="count">1</span><span class="name">Hlavní jídla</span></a>
+        <a class="tile press" href="#recepty" data-cat="Dezerty" style="background:var(--cat-6)"><span class="emoji">🍰</span><span class="count">1</span><span class="name">Dezerty</span></a>
+        <a class="tile press" href="#recepty" data-cat="Mořské plody" style="background:var(--cat-4)"><span class="emoji">🦪</span><span class="count">1</span><span class="name">Mořské plody</span></a>
+        <a class="tile press" href="#recepty" data-cat="Salátky" style="background:var(--cat-8)"><span class="emoji">🥗</span><span class="count">0</span><span class="name">Salátky</span></a>
+        <a class="tile press" href="#recepty" data-cat="Bezmasá jídla" style="background:var(--cat-1)"><span class="emoji">🥬</span><span class="count">0</span><span class="name">Bezmasá jídla</span></a>
+        <a class="tile press" href="#recepty" data-cat="Snídaně" style="background:var(--cat-0)"><span class="emoji">🍳</span><span class="count">0</span><span class="name">Snídaně</span></a>
+        <a class="tile press" href="#recepty" data-cat="Nápoje" style="background:var(--cat-2)"><span class="emoji">🍹</span><span class="count">0</span><span class="name">Nápoje</span></a>
       </div>
+    </div>
+  </section>
+
+
+  <!-- ============ RECEPTY ============ -->
+  <section class="screen" data-screen="recepty">
+    <header class="screen-head">
+      <div><h1 class="t-large">Recepty</h1></div>
+      <button class="round glass press" id="sort-btn" aria-label="Řazení"><svg class="ic"><use href="#i-sort"/></svg></button>
+    </header>
+    <p class="t-sub" style="padding:0 4px 14px" id="list-count"></p>
+
+    <div class="stack">
+      <label class="field only-mobile"><svg class="ic"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Hledat recept nebo surovinu" aria-label="Hledat"></label>
+      <div class="segmented" id="scope" role="group" aria-label="Hledat podle">
+        <span class="seg-indicator"></span>
+        <button aria-pressed="true" data-scope="name">Podle názvu</button>
+        <button aria-pressed="false" data-scope="ing">Podle surovin</button>
+      </div>
+    </div>
+
+    <div class="chips" id="chips" role="group" aria-label="Kategorie"></div>
+    <div class="sort-row"><span class="t-foot" id="sort-label">Nejnovější nahoře</span></div>
+
+    <div class="r-list" id="r-list"></div>
+    <div class="empty" id="empty" hidden>
+      <span class="emoji">🔍</span>
+      <p class="t-head">Nic takového tu zatím není</p>
+      <p class="t-sub">Zkus jiné slovo nebo hledej podle surovin.</p>
+      <a class="pill pill-soft pill-sm press" href="#domu">Přidat nový recept</a>
     </div>
   </section>
 
@@ -243,7 +274,7 @@
     <div class="tabbar glass">
       <span class="tab-indicator" id="tab-indicator"></span>
       <a class="tab" href="#domu" data-nav="domu"><svg class="ic"><use href="#i-home"/></svg>Domů</a>
-      <a class="tab" href="#domu" data-nav="recepty"><svg class="ic"><use href="#i-book"/></svg>Recepty</a>
+      <a class="tab" href="#recepty" data-nav="recepty"><svg class="ic"><use href="#i-book"/></svg>Recepty</a>
       <a class="tab" href="#nakup" data-nav="nakup"><svg class="ic"><use href="#i-bag"/></svg>Nákup</a>
     </div>
     <a class="fab press" href="#domu" aria-label="Nový recept"><svg class="ic"><use href="#i-plus"/></svg></a>
@@ -287,10 +318,12 @@ function moveIndicator() {
   ind.style.transform = `translateX(${cur.offsetLeft}px)`;
 }
 function moveSeg() {
-  const cur = $('#lists [aria-pressed="true"]'), ind = $('#lists .seg-indicator');
-  if (!cur || !cur.offsetWidth) return;
-  ind.style.width = cur.offsetWidth + 'px';
-  ind.style.transform = `translateX(${cur.offsetLeft - 3}px)`;
+  for (const seg of $$('.segmented')) {
+    const cur = seg.querySelector('[aria-pressed="true"]'), ind = seg.querySelector('.seg-indicator');
+    if (!cur || !cur.offsetWidth) continue;
+    ind.style.width = cur.offsetWidth + 'px';
+    ind.style.transform = `translateX(${cur.offsetLeft - 3}px)`;
+  }
 }
 $('#lists').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
@@ -340,9 +373,72 @@ $('#add-item').addEventListener('submit', e => {
 
 // klávesnice (desktop): „/“ hledání, Esc zpět z receptu
 addEventListener('keydown', e => {
-  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); $('#side-search').focus(); }
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); (innerWidth >= 960 ? $('#side-search') : $('#q')).focus(); }
   if (e.key === 'Escape' && location.hash === '#recept') location.hash = '#domu';
 });
+
+
+// ---------- Recepty: procházení, hledání, kategorie ----------
+const RECIPES = [
+  { name: 'Kuřecí polévka s nudlemi', cat: 'Polévky', emoji: '🍲', bg: 0, time: '45 min', who: 'Eva', stars: 4, age: 3, ing: 'kuřecí skelet mrkev celer nudle' },
+  { name: 'Polévka z mušlí', cat: 'Mořské plody', also: 'Polévky', emoji: '🦪', bg: 4, time: '40 min', who: 'Eva', stars: 5, age: 2, ing: 'mušle máslo bílé víno smetana česnek' },
+  { name: 'Hovězí guláš', cat: 'Hlavní jídla', emoji: '🍽️', bg: 5, time: '2 h 30 min', who: 'Petr', stars: 4.8, age: 4, ing: 'hovězí kližka cibule paprika majoránka vývar' },
+  { name: 'Palačinky', cat: 'Dezerty', emoji: '🥞', bg: 6, time: '25 min', who: 'Lukáš', stars: 0, age: 1, ing: 'mouka mléko vejce sůl' },
+];
+const CATS = [['Polévky','🍲'],['Hlavní jídla','🍽️'],['Dezerty','🍰'],['Mořské plody','🦪'],['Salátky','🥗'],['Bezmasá jídla','🥬'],['Snídaně','🍳'],['Nápoje','🍹']];
+const SORTS = { new: 'Nejnovější nahoře', best: 'Nejlépe hodnocené', az: 'Podle abecedy' };
+const lv = { cat: '', q: '', scope: 'name', sort: 'new' };
+const norm = t => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+function renderChips() {
+  $('#chips').innerHTML = [['', 'Vše', '']].concat(CATS.map(([c, e]) => [c, c, e]))
+    .map(([c, label, e]) => `<button class="chip press" aria-pressed="${lv.cat === c}" data-chip="${c}">${e ? `<span>${e}</span>` : ''}${label}</button>`).join('');
+}
+function renderList(animate) {
+  const words = norm(lv.q).split(/\s+/).filter(Boolean);
+  let list = RECIPES.filter(r => (!lv.cat || r.cat === lv.cat || r.also === lv.cat)
+    && words.every(w => norm(lv.scope === 'ing' ? r.ing : r.name).includes(w)));
+  list.sort(lv.sort === 'best' ? (a, b) => b.stars - a.stars : lv.sort === 'az' ? (a, b) => a.name.localeCompare(b.name, 'cs') : (a, b) => a.age - b.age);
+  const n = list.length;
+  $('#list-count').textContent = `${n} ${n === 1 ? 'recept' : n > 1 && n < 5 ? 'recepty' : 'receptů'}${lv.cat ? ' v kategorii ' + lv.cat : ''}`;
+  $('#sort-label').textContent = SORTS[lv.sort];
+  $('#empty').hidden = n > 0;
+  $('#r-list').innerHTML = list.map(r => `
+    <a class="card r-card press" href="#recept" data-hero>
+      <span class="art" style="background:var(--cat-${r.bg})"><span class="emoji">${r.emoji}</span></span>
+      <span class="r-body">
+        <span class="t-head">${r.name}</span>
+        <span class="t-foot">${r.cat} · ${r.who}</span>
+        <span class="r-meta"><span class="meta-item"><svg class="ic"><use href="#i-clock"/></svg>${r.time}</span>${r.stars ? `<span class="score"><svg class="ic"><use href="#i-star"/></svg>${String(r.stars).replace('.', ',')}</span>` : '<span class="t-foot">Bez hodnocení</span>'}</span>
+      </span>
+    </a>`).join('');
+  if (animate) $$('#r-list .r-card').forEach((el, i) => el.animate(
+    [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }],
+    { duration: 380, delay: i * 40, easing: 'cubic-bezier(.2,.9,.25,1)', fill: 'backwards' }));
+}
+$('#chips').addEventListener('click', e => {
+  const b = e.target.closest('[data-chip]'); if (!b) return;
+  lv.cat = b.dataset.chip; $$('#chips .chip').forEach(x => x.setAttribute('aria-pressed', x === b));
+  b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+  renderList(true);
+});
+$('#scope').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  lv.scope = b.dataset.scope; $$('#scope button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  moveSeg(); renderList(true);
+});
+$('#sort-btn').onclick = () => { const k = Object.keys(SORTS); lv.sort = k[(k.indexOf(lv.sort) + 1) % k.length]; renderList(true); };
+for (const inp of [$('#q'), $('#side-search')]) inp.addEventListener('input', () => {
+  lv.q = inp.value; $('#q').value = $('#side-search').value = inp.value;
+  if (location.hash !== '#recepty') location.hash = '#recepty';
+  renderList(false);
+});
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-cat], [data-sort], [data-nav="recepty"]'); if (!t) return;
+  lv.cat = t.dataset.cat || ''; if (t.dataset.sort) lv.sort = t.dataset.sort;
+  renderChips(); renderList(false);
+}, true);
+renderChips(); renderList(false);
 
 $('#theme').onclick = () => {
   const r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;

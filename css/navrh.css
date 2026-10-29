@@ -320,6 +320,34 @@ kbd { font: 600 12px/1 var(--font); padding: 4px 7px; border-radius: 7px; backgr
 .item.leaving { animation: leave .5s var(--out) forwards; }
 @keyframes leave { to { opacity: 0; transform: translateX(30px); } }
 
+
+/* ---------- recepty: kategorie jako čipy, seznam karet ---------- */
+.chips {
+  display: flex; gap: 8px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity;
+  margin: 16px calc(var(--gutter) * -1) 0; padding: 2px var(--gutter) 4px;
+  scroll-padding-inline: var(--gutter); scrollbar-width: none;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: none; display: inline-flex; align-items: center; gap: 6px; scroll-snap-align: start;
+  height: 38px; padding: 0 15px; border-radius: 999px;
+  background: linear-gradient(180deg, var(--surface-top), var(--surface-bottom)); box-shadow: var(--card-shadow);
+  font-size: 15px; font-weight: 600;
+}
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-on); box-shadow: none; }
+.sort-row { padding: 18px 4px 10px; }
+.r-list { display: grid; gap: 10px; }
+.r-card { display: flex; align-items: center; gap: 14px; padding: 8px 16px 8px 8px; }
+.r-card .art { width: 84px; height: 84px; border-radius: 18px; flex: none; }
+.r-card .art .emoji { font-size: 40px; }
+.r-body { display: grid; gap: 3px; min-width: 0; }
+.r-body .t-head { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.r-meta { display: flex; gap: 12px; margin-top: 3px; font-size: 14px; color: var(--ink-2); }
+.r-meta .ic { width: 15px; height: 15px; }
+.empty { display: grid; justify-items: center; gap: 6px; padding: 48px 20px; text-align: center; }
+.empty .emoji { font-size: 44px; margin-bottom: 6px; }
+.empty .pill { margin-top: 12px; }
+
 /* ---------- přechody mezi obrazovkami (View Transitions) ---------- */
 ::view-transition-old(root) { animation: .22s var(--out) both fade-out; }
 ::view-transition-new(root) { animation: .38s var(--out) both rise-in; }
@@ -371,6 +399,10 @@ kbd { font: 600 12px/1 var(--font); padding: 4px 7px; border-radius: 7px; backgr
   .cook-bar { position: static; justify-content: flex-start; margin-top: 14px; }
   .cook-bar .pill { height: 48px; }
 
+  .only-mobile { display: none; }
+  .chips { flex-wrap: wrap; overflow: visible; margin: 18px 0 0; padding: 0; }
+  .r-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .r-card:hover { transform: translateY(-2px); }
   .shop-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; align-items: start; }
 }
 
